@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  /* Main Colors */
+  --color-tranquil-velvet: #6C1D5F;
+  --color-tranquil-velvet-dark: #4A1E47;
+  
+  /* Secondary Colors */
+  --color-bright-velvet: #84117C;
+  
+  /* Tertiary Colors */
+  --color-blueish-grey: #F7F8FC;
+  --color-medium-grey: #DADCEA;
+  
+  /* Neutral Colors */
+  --color-light-grey: #DEDEDE;
+  --color-dark-grey: #5A5A5A;
+  
+  /* Link/CTA Colors */
+  --color-emerald: #01AC9F;
+  --color-cta-orange: #FF6200;
+}
