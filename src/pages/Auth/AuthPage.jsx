@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, User, ArrowRight, Eye, EyeOff } from 'lucide-react';
-import HeaderNav from '../components/HeaderNav.jsx';
-import Footer from '../components/Footer.jsx';
-import BorderGlow from '../components/BorderGlow.jsx';
-import Logo from '../components/Logo.jsx';
-import { useTheme } from '../context/ThemeContext.jsx';
+import HeaderNav from '@/components/layout/HeaderNav.jsx';
+import Footer from '@/components/layout/Footer.jsx';
+import BorderGlow from '@/components/ui/BorderGlow.jsx';
+import Logo from '@/components/ui/Logo.jsx';
+import { useTheme } from '@/context/ThemeContext.jsx';
+
 
 export default function Auth() {
   const [activeTab, setActiveTab] = useState('signin'); // 'signin' or 'signup'

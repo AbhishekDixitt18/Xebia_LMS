@@ -4,8 +4,9 @@ import {
   Layers, Users, BookOpen, BarChart2, DollarSign, 
   FileText, Settings, ChevronLeft, ChevronRight, Sun, Moon, LogOut, Sparkles, GraduationCap
 } from 'lucide-react';
-import Logo from '../Logo.jsx';
-import { useTheme } from '../../context/ThemeContext.jsx';
+import Logo from '@/components/ui/Logo.jsx';
+import { useTheme } from '@/context/ThemeContext.jsx';
+
 
 const navItems = [
   { path: '/dashboard', label: 'Dashboard', icon: Layers },

@@ -2,14 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, ArrowRight, HelpCircle, Search, ChevronDown, Mail, Phone, MapPin, Send, CheckCircle, Lock, User, Eye, EyeOff } from 'lucide-react';
-import HeaderNav from '../components/HeaderNav.jsx';
-import Footer from '../components/Footer.jsx';
-import BorderGlow from '../components/BorderGlow.jsx';
-import Typewriter from '../components/Typewriter.jsx';
-import Logo from '../components/Logo.jsx';
-import { useTheme } from '../context/ThemeContext.jsx';
-import heroImg from '../assets/Hero2.png';
-import bg1Img from '../assets/BG1.avif';
+import HeaderNav from '@/components/layout/HeaderNav.jsx';
+import Footer from '@/components/layout/Footer.jsx';
+import BorderGlow from '@/components/ui/BorderGlow.jsx';
+import Typewriter from '@/components/ui/Typewriter.jsx';
+import Logo from '@/components/ui/Logo.jsx';
+import { useTheme } from '@/context/ThemeContext.jsx';
+import heroImg from '@/assets/Hero2.png';
+import bg1Img from '@/assets/BG1.avif';
+
 
 const faqData = [
   {

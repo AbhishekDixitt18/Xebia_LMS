@@ -1,8 +1,9 @@
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 import { Sparkles, ArrowRight } from 'lucide-react';
-import BorderGlow from '../../components/BorderGlow.jsx';
-import { useTheme } from '../../context/ThemeContext.jsx';
+import BorderGlow from '@/components/ui/BorderGlow.jsx';
+import { useTheme } from '@/context/ThemeContext.jsx';
+
 
 const trendsData = [
   { name: 'Jan', engagement: 65, completion: 40, retention: 85 },

@@ -1,5 +1,6 @@
 import React from 'react';
-import logoImg from '../assets/logo.png';
+import logoImg from '@/assets/logo.png';
+
 
 export default function Logo({ className = "h-8" }) {
   return (

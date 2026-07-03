@@ -32,7 +32,8 @@ import {
   BookOpen
 } from 'lucide-react';
 import { AreaChart, Area, ResponsiveContainer, XAxis, YAxis, Tooltip, BarChart, Bar, LineChart, Line, CartesianGrid } from 'recharts';
-import CountUp from '../../components/CountUp.jsx';
+import CountUp from '@/components/ui/CountUp.jsx';
+
 
 // Inline logo element for SkillSphere Academy
 function SkillSphereLogo({ className = "h-8" }) {

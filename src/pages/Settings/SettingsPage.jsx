@@ -22,8 +22,9 @@ import {
   CheckCircle2,
   ExternalLink
 } from 'lucide-react';
-import BorderGlow from '../../components/BorderGlow.jsx';
-import { useTheme } from '../../context/ThemeContext.jsx';
+import BorderGlow from '@/components/ui/BorderGlow.jsx';
+import { useTheme } from '@/context/ThemeContext.jsx';
+
 
 export default function SettingsPage() {
   const { theme } = useTheme();

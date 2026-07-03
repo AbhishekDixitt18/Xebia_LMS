@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
-import { BookOpen, CheckCircle, FileText, Archive, Plus, Trash2, Edit2, Star, Users } from 'lucide-react';
-import CountUp from '../../components/CountUp.jsx';
-import BorderGlow from '../../components/BorderGlow.jsx';
-import { useTheme } from '../../context/ThemeContext.jsx';
+import React, { useState, useEffect } from 'react';
 
-export default function CoursesPage({ courses, handleSimulateProgress, searchQuery }) {
+import { BookOpen, CheckCircle, FileText, Archive, Plus, Trash2, Edit2, Star, Users } from 'lucide-react';
+import CountUp from '@/components/ui/CountUp.jsx';
+import BorderGlow from '@/components/ui/BorderGlow.jsx';
+import { useTheme } from '@/context/ThemeContext.jsx';
+
+
+export default function CoursesPage({ courses, handleSimulateProgress, searchQuery, loading }) {
   const { theme } = useTheme();
-  const [localCourses, setLocalCourses] = useState(courses);
+  const [localCourses, setLocalCourses] = useState([]);
+
+  useEffect(() => {
+    setLocalCourses(courses);
+  }, [courses]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="h-10 w-10 border-4 border-tranquil-velvet border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
 
   const activeSearch = searchQuery || '';
 

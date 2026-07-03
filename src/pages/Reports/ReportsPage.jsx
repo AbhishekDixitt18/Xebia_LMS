@@ -20,9 +20,10 @@ import {
   X,
   Sparkles
 } from 'lucide-react';
-import BorderGlow from '../../components/BorderGlow.jsx';
-import CountUp from '../../components/CountUp.jsx';
-import { useTheme } from '../../context/ThemeContext.jsx';
+import BorderGlow from '@/components/ui/BorderGlow.jsx';
+import CountUp from '@/components/ui/CountUp.jsx';
+import { useTheme } from '@/context/ThemeContext.jsx';
+
 
 const reportTypes = [
   {

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronRight, Sun, Moon } from 'lucide-react';
-import Logo from './Logo.jsx';
-import { useTheme } from '../context/ThemeContext.jsx';
+import Logo from '@/components/ui/Logo.jsx';
+import { useTheme } from '@/context/ThemeContext.jsx';
+
 
 export default function HeaderNav() {
   const location = useLocation();

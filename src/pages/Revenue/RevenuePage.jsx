@@ -1,9 +1,10 @@
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, LineChart, Line } from 'recharts';
 import { DollarSign, Percent, Calendar } from 'lucide-react';
-import BorderGlow from '../../components/BorderGlow.jsx';
-import CountUp from '../../components/CountUp.jsx';
-import { useTheme } from '../../context/ThemeContext.jsx';
+import BorderGlow from '@/components/ui/BorderGlow.jsx';
+import CountUp from '@/components/ui/CountUp.jsx';
+import { useTheme } from '@/context/ThemeContext.jsx';
+
 
 const revenueTrendsData = [
   { name: 'Jan', revenue: 38000, subscriptions: 28000, sales: 10000, refunds: 500 },

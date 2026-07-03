@@ -1,27 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Users, UserCheck, UserPlus, GraduationCap, Search, 
   Filter, ChevronLeft, ChevronRight, Download, Trash, Edit 
 } from 'lucide-react';
-import CountUp from '../../components/CountUp.jsx';
-import BorderGlow from '../../components/BorderGlow.jsx';
-import { useTheme } from '../../context/ThemeContext.jsx';
-
-const initialUsers = [
-  { id: 1, name: 'Marcus Long', email: 'marcus.long@techcorp.com', role: 'Senior Developer', enrollments: 4, progress: 85, lastLogin: '2 mins ago', status: 'active' },
-  { id: 2, name: 'Karla Abbott', email: 'karla.abbott@cloudsystem.com', role: 'DevOps Lead', enrollments: 3, progress: 100, lastLogin: '45 mins ago', status: 'active' },
-  { id: 3, name: 'Toby Reynolds', email: 'toby.reynolds@apexdata.com', role: 'Solutions Architect', enrollments: 5, progress: 40, lastLogin: '2 hours ago', status: 'active' },
-  { id: 4, name: 'Sarah Jenkins', email: 'sarah.jenkins@webflow.com', role: 'Frontend Engineer', enrollments: 2, progress: 75, lastLogin: '1 day ago', status: 'active' },
-  { id: 5, name: 'Alex Rivera', email: 'alex.rivera@codeminded.io', role: 'Backend Engineer', enrollments: 3, progress: 60, lastLogin: '3 days ago', status: 'inactive' },
-  { id: 6, name: 'Michael Chen', email: 'michael.chen@cloudbase.org', role: 'Cloud Engineer', enrollments: 4, progress: 90, lastLogin: '4 days ago', status: 'active' },
-  { id: 7, name: 'David Vance', email: 'david.vance@architects.net', role: 'Principal Architect', enrollments: 6, progress: 15, lastLogin: '1 week ago', status: 'inactive' }
-];
+import CountUp from '@/components/ui/CountUp.jsx';
+import BorderGlow from '@/components/ui/BorderGlow.jsx';
+import { useTheme } from '@/context/ThemeContext.jsx';
+import { api } from '@/services/api.js';
 
 export default function UsersPage({ searchQuery }) {
   const { theme } = useTheme();
-  const [users, setUsers] = useState(initialUsers);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [localSearch, setLocalSearch] = useState('');
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const data = await api.getUsers();
+        setUsers(data);
+      } catch (err) {
+        console.error("Failed to load users:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+
   const [roleFilter, setRoleFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,14 +66,24 @@ export default function UsersPage({ searchQuery }) {
     );
   };
 
-  const handleDeleteUser = (id) => {
-    setUsers(prev => prev.filter(u => u.id !== id));
-    setSelectedUsers(prev => prev.filter(uId => uId !== id));
+  const handleDeleteUser = async (id) => {
+    try {
+      const updated = await api.deleteUser(id);
+      setUsers(updated);
+      setSelectedUsers(prev => prev.filter(uId => uId !== id));
+    } catch (err) {
+      console.error("Failed to delete user:", err);
+    }
   };
 
-  const handleBulkDelete = () => {
-    setUsers(prev => prev.filter(u => !selectedUsers.includes(u.id)));
-    setSelectedUsers([]);
+  const handleBulkDelete = async () => {
+    try {
+      const updated = await api.deleteUsersBulk(selectedUsers);
+      setUsers(updated);
+      setSelectedUsers([]);
+    } catch (err) {
+      console.error("Failed to bulk delete users:", err);
+    }
   };
 
   const exportToCSV = () => {
@@ -78,6 +96,14 @@ export default function UsersPage({ searchQuery }) {
     a.setAttribute('download', 'lms_users_export.csv');
     a.click();
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="h-10 w-10 border-4 border-tranquil-velvet border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

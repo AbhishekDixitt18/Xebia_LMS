@@ -15,11 +15,12 @@ import {
   CheckCircle,
   Search
 } from 'lucide-react';
-import BorderGlow from '../../components/BorderGlow.jsx';
-import CountUp from '../../components/CountUp.jsx';
-import { useTheme } from '../../context/ThemeContext.jsx';
+import BorderGlow from '@/components/ui/BorderGlow.jsx';
+import CountUp from '@/components/ui/CountUp.jsx';
+import { useTheme } from '@/context/ThemeContext.jsx';
 
-export default function TutorsPage({ tutors = [], setTutors }) {
+
+export default function TutorsPage({ tutors = [], onAddTutor, onDeleteTutor, loading }) {
   const { theme } = useTheme();
 
   // Local States
@@ -53,21 +54,26 @@ export default function TutorsPage({ tutors = [], setTutors }) {
       addToast('Please fill out all required fields.', 'error');
       return;
     }
-    const added = {
-      ...newTutor,
-      id: `T-${Date.now().toString().slice(-3)}`
-    };
-    setTutors([added, ...tutors]);
+    onAddTutor(newTutor);
     setShowTutorModal(false);
     setNewTutor({ name: '', dept: 'Frontend', title: '', courses: 1, hours: 10, rating: 5.0, status: 'Online', email: '' });
-    addToast(`Added Tutor ${added.name} successfully!`);
+    addToast(`Added Tutor successfully!`);
   };
 
   // Delete Tutor
   const handleDeleteTutor = (id) => {
-    setTutors(tutors.filter(t => t.id !== id));
+    onDeleteTutor(id);
     addToast('Tutor entry archived.', 'info');
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="h-10 w-10 border-4 border-tranquil-velvet border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
 
   // Filter tutors
   const filteredTutors = useMemo(() => {

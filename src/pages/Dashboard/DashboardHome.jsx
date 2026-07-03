@@ -11,9 +11,10 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, 
   Tooltip, ResponsiveContainer, LineChart, Line, BarChart, Bar
 } from 'recharts';
-import BorderGlow from '../../components/BorderGlow.jsx';
-import CountUp from '../../components/CountUp.jsx';
-import { useTheme } from '../../context/ThemeContext.jsx';
+import BorderGlow from '@/components/ui/BorderGlow.jsx';
+import CountUp from '@/components/ui/CountUp.jsx';
+import { useTheme } from '@/context/ThemeContext.jsx';
+
 
 // Dummy data for charts
 const sparklineData = [

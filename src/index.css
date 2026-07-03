@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
+
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+  --font-sans: 'Inter', sans-serif;
+
   /* Main Colors */
   --color-tranquil-velvet: #6C1D5F;
   --color-tranquil-velvet-dark: var(--tranquil-velvet-dark);
@@ -10,66 +14,132 @@
   /* Secondary Colors */
   --color-bright-velvet: #84117C;
 
-  /* Tertiary Colors */
+  /* Reusable Theme Tokens */
+  --color-bg-page: var(--bg-page);
+  --color-bg-card: var(--bg-card);
+  --color-bg-hover: var(--bg-hover);
+  --color-border-card: var(--border-card);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  /* Mappings for legacy compatibility */
   --color-blueish-grey: var(--bg-page);
   --color-medium-grey: var(--border-card);
-
-  /* Neutral Colors */
-  --color-light-grey: var(--bg-light-grey);
+  --color-light-grey: var(--bg-hover);
   --color-dark-grey: var(--text-secondary);
 
   /* Link/CTA Colors */
   --color-emerald: #01AC9F;
   --color-cta-orange: #FF6200;
-
-  /* Custom Theme Tokens */
-  --color-bg-page: var(--bg-page);
-  --color-bg-card: var(--bg-card);
-  --color-border-card: var(--border-card);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-
-
 }
 
 :root {
   --tranquil-velvet-dark: #4A1E47;
   --bg-page: #F7F8FC;
   --bg-card: #FFFFFF;
-  --bg-light-grey: #DEDEDE;
+  --bg-hover: #F0F1F5;
   --border-card: #DADCEA;
-  --text-primary: #000000;
-  --text-secondary: #5A5A5A;
+  --text-primary: #18181B;     /* Zinc-900 (Primary Heading Color) */
+  --text-secondary: #71717A;   /* Zinc-500 (Secondary Text) */
+  --text-muted: #A1A1AA;       /* Zinc-400 (Muted Text) */
   --glow-blend-mode: normal;
 }
 
 .dark {
   --tranquil-velvet-dark: #3F183C;
-  --bg-page: #171821;
-  --bg-card: #20222F;
-  --bg-light-grey: #2E3144;
-  --border-card: #32354A;
-  --text-primary: #F3F4F6;
-  --text-secondary: #9CA3AF;
+  --bg-page: #09090b;          /* Zinc-950 (Dark Page Background) */
+  --bg-card: #18181b;          /* Zinc-900 (Dark Card Background) */
+  --bg-hover: #27272a;         /* Zinc-800 */
+  --border-card: #27272a;      /* Zinc-800 */
+  --text-primary: #F4F4F5;     /* Zinc-100 */
+  --text-secondary: #A1A1AA;   /* Zinc-400 */
+  --text-muted: #71717A;       /* Zinc-500 */
   --glow-blend-mode: plus-lighter;
 }
 
-/* Global Overrides for Dark Mode */
+/* Uppercase Labels Specification: 10px with increased tracking (0.8px) */
+span.uppercase,
+label,
+.uppercase {
+  font-size: 10px !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+}
+
+/* Dashboard Numbers Specification: 32px with negative letter spacing (-0.8px) */
+.text-2xl.font-extrabold,
+.text-3xl.font-extrabold,
+.text-3xl.font-bold {
+  font-size: 32px !important;
+  letter-spacing: -0.8px !important;
+  font-weight: 800 !important;
+}
+
+
+/* Global Overrides for Theme Consistency */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
 .dark body {
   background-color: var(--bg-page);
   color: var(--text-primary);
 }
 
-.dark .text-black {
+/* Universal Background & Border mapping for theme consistency */
+.bg-white,
+.dark .bg-white,
+.dark .bg-\[\#16171F\],
+.dark\:bg-\[\#16171F\] {
+  background-color: var(--bg-card) !important;
+}
+
+.bg-blueish-grey,
+.bg-\[\#F7F8FC\],
+.dark .bg-\[\#0F1015\],
+.dark\:bg-\[\#0F1015\],
+.dark .bg-\[\#171821\] {
+  background-color: var(--bg-page) !important;
+}
+
+.border-medium-grey,
+.dark .border-\[\#282A3A\],
+.dark\:border-\[\#282A3A\],
+.dark .border-\[\#2D3043\],
+.dark\:border-\[\#2D3043\] {
+  border-color: var(--border-card) !important;
+}
+
+.text-black,
+.dark .text-black,
+.dark\:text-white {
   color: var(--text-primary) !important;
 }
 
-.dark .text-dark-grey {
+.text-dark-grey,
+.dark .text-dark-grey,
+.dark\:text-white\/60 {
   color: var(--text-secondary) !important;
 }
 
-.dark .bg-white {
-  background-color: var(--bg-card) !important;
+/* Custom cards and input containers */
+input, select, textarea {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--border-card);
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: var(--bg-page) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-card) !important;
 }
 
 .dark .bg-white\/95,
@@ -86,51 +156,7 @@
   background-color: var(--bg-page) !important;
 }
 
-.dark input,
-.dark select,
-.dark textarea {
-  background-color: var(--bg-page) !important;
-  color: var(--text-primary) !important;
-  border-color: var(--border-card) !important;
-}
 
-/* Hardcoded dark mode class overrides for consistency with lighter theme */
-.dark .bg-\[\#0F1015\],
-.dark .dark\:bg-\[\#0F1015\] {
-  background-color: var(--bg-page) !important;
-}
-.dark .bg-\[\#16171F\],
-.dark .dark\:bg-\[\#16171F\] {
-  background-color: var(--bg-card) !important;
-}
-.dark .bg-\[\#1E1F29\],
-.dark .dark\:bg-\[\#1E1F29\] {
-  background-color: var(--bg-light-grey) !important;
-}
-.dark .bg-\[\#262837\],
-.dark .dark\:bg-\[\#262837\] {
-  background-color: var(--bg-light-grey) !important;
-}
-.dark .border-\[\#282A3A\],
-.dark .dark\:border-\[\#282A3A\] {
-  border-color: var(--border-card) !important;
-}
-.dark .border-\[\#2D3043\],
-.dark .dark\:border-\[\#2D3043\] {
-  border-color: var(--border-card) !important;
-}
-.dark .hover\:bg-\[\#262837\]:hover,
-.dark .dark\:hover\:bg-\[\#262837\]:hover {
-  background-color: var(--bg-light-grey) !important;
-}
-.dark .hover\:bg-\[\#1E1F29\]:hover,
-.dark .dark\:hover\:bg-\[\#1E1F29\]:hover {
-  background-color: var(--bg-light-grey) !important;
-}
-.dark .divide-\[\#262837\] > :not([hidden]) ~ :not([hidden]),
-.dark .dark\:divide-\[\#262837\] > :not([hidden]) ~ :not([hidden]) {
-  border-color: var(--border-card) !important;
-}
 
 /* Specific elements like Logo background container in Dashboard */
 .dark .cursor-pointer.hover\:opacity-95.transition.bg-white {
