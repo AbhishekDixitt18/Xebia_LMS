@@ -9,6 +9,7 @@ import RevenuePage from '@/pages/Revenue/RevenuePage.jsx';
 import ReportsPage from '@/pages/Reports/ReportsPage.jsx';
 import SettingsPage from '@/pages/Settings/SettingsPage.jsx';
 import ModulesPage from '@/pages/Modules/ModulesPage.jsx';
+import OrganisationsPage from '@/pages/Organisations/OrganisationsPage.jsx';
 import AssessmentPage from '@/pages/Assessment/AssessmentPage.jsx';
 import SchedulingPage from '@/pages/Scheduling/SchedulingPage.jsx';
 import ProfilePage from '@/pages/Profile/ProfilePage.jsx';
@@ -16,7 +17,7 @@ import TutorsPage from '@/pages/Tutors/TutorsPage.jsx';
 import { api } from '@/services/api.js';
 
 
-export default function Dashboard({ courses, handleSimulateProgress, coursesLoading }) {
+export default function Dashboard({ courses, handleSimulateProgress, handleAddCourse, handleApproveCourse, handleDeleteCourse, coursesLoading }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [tutors, setTutors] = useState([]);
   const [tutorsLoading, setTutorsLoading] = useState(true);
@@ -65,21 +66,24 @@ export default function Dashboard({ courses, handleSimulateProgress, coursesLoad
         <Route path="/permissions" element={<BlankPage name="Permissions" />} />
         <Route path="/roles-grants" element={<BlankPage name="Roles & Grants" />} />
         <Route path="/users" element={<UsersPage searchQuery={searchQuery} />} />
-        <Route path="/organisations" element={<BlankPage name="Organisations" />} />
+        <Route path="/organisations" element={<OrganisationsPage searchQuery={searchQuery} />} />
         <Route path="/domains" element={<BlankPage name="Domains" />} />
         <Route path="/parents" element={<BlankPage name="Parents" />} />
         <Route path="/learners" element={<BlankPage name="Learners" />} />
         <Route path="/batches" element={<BlankPage name="Batches" />} />
-        <Route 
-          path="/courses" 
+        <Route
+          path="/courses"
           element={
-            <CoursesPage 
-              courses={courses} 
-              handleSimulateProgress={handleSimulateProgress} 
+            <CoursesPage
+              courses={courses}
+              handleSimulateProgress={handleSimulateProgress}
+              handleAddCourse={handleAddCourse}
+              handleApproveCourse={handleApproveCourse}
+              handleDeleteCourse={handleDeleteCourse}
               searchQuery={searchQuery}
               loading={coursesLoading}
             />
-          } 
+          }
         />
         <Route path="/audit-log" element={<BlankPage name="Audit Log" />} />
         <Route path="/profile" element={<ProfilePage />} />
@@ -87,16 +91,16 @@ export default function Dashboard({ courses, handleSimulateProgress, coursesLoad
         <Route path="/scheduling" element={<SchedulingPage />} />
         <Route path="/assessment" element={<AssessmentPage />} />
         <Route path="/finance" element={<RevenuePage />} />
-        <Route 
-          path="/trainer" 
+        <Route
+          path="/trainer"
           element={
-            <TutorsPage 
-              tutors={tutors} 
-              onAddTutor={handleAddTutor} 
-              onDeleteTutor={handleDeleteTutor} 
+            <TutorsPage
+              tutors={tutors}
+              onAddTutor={handleAddTutor}
+              onDeleteTutor={handleDeleteTutor}
               loading={tutorsLoading}
             />
-          } 
+          }
         />
       </Routes>
     </DashboardLayout>
