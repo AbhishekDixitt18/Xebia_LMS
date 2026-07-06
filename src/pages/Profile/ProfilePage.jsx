@@ -7,9 +7,10 @@
  */
 
 import React, { useState } from 'react';
-import { Camera, Pencil, Eye, Shield, ShieldCheck, ArrowRight, CheckCircle2, UploadCloud } from 'lucide-react';
+import { Camera, Pencil, Eye, Shield, ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext.jsx';
 import { ProfileActionButton, ProfileBadge, ProfileCardFrame, ProfileInfoRow, ScopePill, ModuleLinkRow, ProfileActionModal } from '@/components/profile/ProfileUi.jsx';
+import { ProfileEditModal } from '@/components/forms/FormsUi.jsx';
 
 const profileData = {
   name: 'Platform Admin',
@@ -56,7 +57,6 @@ const scopePreview = profileData.scopes.slice(0, 12);
 export default function ProfilePage() {
   const { theme } = useTheme();
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showPhotoModal, setShowPhotoModal] = useState(false);
   const [showViewScopes, setShowViewScopes] = useState(false);
   const [showModulesModal, setShowModulesModal] = useState(false);
   const [activeModule, setActiveModule] = useState(null);
@@ -65,6 +65,7 @@ export default function ProfilePage() {
     email: profileData.email,
     role: profileData.role,
     subRole: profileData.subRole,
+    profileImage: profileData.profileImage,
   });
 
   const handleChange = (field, value) => {
@@ -74,10 +75,6 @@ export default function ProfilePage() {
   const handleSaveProfile = (event) => {
     event.preventDefault();
     setShowEditModal(false);
-  };
-
-  const handleViewPhoto = () => {
-    setShowPhotoModal(true);
   };
 
   const handleOpenModule = (module) => {
@@ -95,9 +92,15 @@ export default function ProfilePage() {
       <ProfileCardFrame className="p-6 bg-[#FFFFFF] border border-[#E7E9F0]">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-4">
-            <div className="relative h-20 w-20 rounded-3xl bg-tranquil-velvet text-white grid place-items-center text-4xl font-black shadow-sm">
-              P
-              <div className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm border border-[#E7E9F0] text-tranquil-velvet">
+            <div className="relative h-20 w-20 overflow-hidden rounded-3xl bg-gradient-to-br from-sky-400 via-cyan-400 to-slate-700 shadow-sm">
+              {formData.profileImage ? (
+                <img src={formData.profileImage} alt="Profile" className="h-full w-full object-cover" />
+              ) : (
+                <div className="grid h-full w-full place-items-center text-4xl font-black text-white">
+                  {formData.displayName?.[0] || 'P'}
+                </div>
+              )}
+              <div className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm border border-[#E7E9F0] text-slate-700">
                 <Camera className="h-4 w-4" />
               </div>
             </div>
@@ -116,7 +119,7 @@ export default function ProfilePage() {
             <ProfileActionButton type="button" tone="secondary" onClick={() => setShowEditModal(true)} className="min-w-[140px] justify-center">
               <Pencil className="h-4 w-4" /> Edit Profile
             </ProfileActionButton>
-            <ProfileActionButton type="button" onClick={handleViewPhoto} className="min-w-[140px] justify-center">
+            <ProfileActionButton type="button" onClick={() => setShowEditModal(true)} className="min-w-[140px] justify-center">
               <Camera className="h-4 w-4" /> Photo
             </ProfileActionButton>
           </div>
@@ -193,62 +196,13 @@ export default function ProfilePage() {
         </div>
       </ProfileCardFrame>
 
-      <ProfileActionModal
+      <ProfileEditModal
         open={showEditModal}
         onClose={() => setShowEditModal(false)}
-        title="Edit profile details"
-        description="Update your user identity, email, and access role."
-        footer={
-          <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
-            <ProfileActionButton tone="secondary" onClick={() => setShowEditModal(false)}>Cancel</ProfileActionButton>
-            <ProfileActionButton type="submit" form="profileForm">Save</ProfileActionButton>
-          </div>
-        }
-      >
-        <form id="profileForm" onSubmit={handleSaveProfile} className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="space-y-2 text-sm text-dark-grey">
-              <span className="block text-[10px] font-bold uppercase tracking-[0.18em]">Display name</span>
-              <input
-                value={formData.displayName}
-                onChange={(e) => handleChange('displayName', e.target.value)}
-                className="w-full rounded-2xl border border-medium-grey bg-[#F7F8FC] px-4 py-3 text-sm text-black focus:outline-none"
-              />
-            </label>
-            <label className="space-y-2 text-sm text-dark-grey">
-              <span className="block text-[10px] font-bold uppercase tracking-[0.18em]">Email</span>
-              <input
-                value={formData.email}
-                onChange={(e) => handleChange('email', e.target.value)}
-                className="w-full rounded-2xl border border-medium-grey bg-[#F7F8FC] px-4 py-3 text-sm text-black focus:outline-none"
-              />
-            </label>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="space-y-2 text-sm text-dark-grey">
-              <span className="block text-[10px] font-bold uppercase tracking-[0.18em]">Role</span>
-              <select
-                value={formData.role}
-                onChange={(e) => handleChange('role', e.target.value)}
-                className="w-full rounded-2xl border border-medium-grey bg-[#F7F8FC] px-4 py-3 text-sm text-black focus:outline-none"
-              >
-                <option>ADMIN</option>
-                <option>MANAGER</option>
-                <option>EDITOR</option>
-              </select>
-            </label>
-            <label className="space-y-2 text-sm text-dark-grey">
-              <span className="block text-[10px] font-bold uppercase tracking-[0.18em]">Sub role</span>
-              <input
-                value={formData.subRole}
-                onChange={(e) => handleChange('subRole', e.target.value)}
-                className="w-full rounded-2xl border border-medium-grey bg-[#F7F8FC] px-4 py-3 text-sm text-black focus:outline-none"
-              />
-            </label>
-          </div>
-        </form>
-      </ProfileActionModal>
+        onSubmit={handleSaveProfile}
+        value={formData}
+        onChange={handleChange}
+      />
 
       <ProfileActionModal
         open={showViewScopes}
@@ -263,31 +217,6 @@ export default function ProfilePage() {
           {profileData.scopes.map((scope) => (
             <ScopePill key={scope}>{scope}</ScopePill>
           ))}
-        </div>
-      </ProfileActionModal>
-
-      <ProfileActionModal
-        open={showPhotoModal}
-        onClose={() => setShowPhotoModal(false)}
-        title="Upload profile photo"
-        description="Choose a new avatar image for your profile card."
-        footer={
-          <div className="flex justify-end gap-3">
-            <ProfileActionButton tone="secondary" onClick={() => setShowPhotoModal(false)}>Cancel</ProfileActionButton>
-            <ProfileActionButton type="button">Upload</ProfileActionButton>
-          </div>
-        }
-      >
-        <div className="space-y-4">
-          <div className="rounded-3xl border border-medium-grey/40 bg-[#F7F8FC] p-5 text-sm text-dark-grey">
-            <p className="font-bold text-black dark:text-white">Profile photo</p>
-            <p className="mt-2 text-xs">Select an image to refresh the profile avatar shown in the header card.</p>
-          </div>
-          <label className="flex items-center gap-3 rounded-2xl border border-medium-grey/40 bg-white px-4 py-3 text-sm text-dark-grey cursor-pointer hover:border-tranquil-velvet/50 transition">
-            <UploadCloud className="h-4 w-4 text-tranquil-velvet" />
-            <span>Add photo file</span>
-            <input type="file" accept="image/*" className="hidden" />
-          </label>
         </div>
       </ProfileActionModal>
 
